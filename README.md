@@ -24,7 +24,7 @@ Packe die Website in einen Docker Container
 
 
 
-3. Erstelle und starte anschliessend das container image. Du solltest nun die Webseite auf `localhost` im Browser
+2. Erstelle und starte anschliessend das container image. Du solltest nun die Webseite auf `localhost` im Browser
    erreichen.
 
 ```shell
@@ -32,8 +32,8 @@ docker build . --tag webengineering
 docker run --name webengineering --detach --publish 80:80 webengineering 
 ```
 
-4. Stoppe den Container mit `docker stop webengineering` und lösche ihn mit `docker rm webengineering`
-5. Erstelle ein docker-compose file (`docker-compose.yml`):
+3. Stoppe den Container mit `docker stop webengineering` und lösche ihn mit `docker rm webengineering`
+4. Erstelle ein docker-compose file (`docker-compose.yml`):
 
 ```yaml
 version: "1"
