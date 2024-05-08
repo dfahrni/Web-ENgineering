@@ -59,3 +59,38 @@ Option 1: Install with one command
 curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
 ```
 
+## Script
+```
+#!/bin/bash
+
+# Docker image bauen und laufen lassen
+docker build . --tag webengineering
+docker run --name webengineering --detach --publish 80:80 webengineering
+docker stop webingineering
+docker rm webengineering
+
+# Docker Compose Befehle
+docker-compose up --build
+docker-compose up
+
+# Azure Resource Management
+az group create --name TEKO --location eastus
+az acr create --resource-group TEKO --name webengineering --sku Basic
+az acr login --name webengineering
+
+# Docker Images auf Azure Registry pushen
+docker tag webengineering webengineering.azurecr.io/webengineering:v1
+docker push webengineering.azurecr.io/webengineering:v1
+
+# Azure Container Registry (ACR) Befehle
+az acr repository list --name webengineering --output table
+az acr repository show-tags --name webengineering --repository webengineering --output table
+
+# Azure Container Instance (ACI) erstellen
+az container create --resource-group TEKO --name webengineering --image webengineering.azurecr.io/webengineering:v1 --cpu 1 --memory 1 --registry-login-server webengineering.azurecr.io --registry-username <service-principal-ID> --registry-password <service-principal-password> --ip-address Public --dns-name-label <aciDnsLabel> --ports 80
+
+# Informationen anzeigen
+az acr show --name webengineering --query loginServer
+az acr show --name webengineering --query loginServer --output table
+```
+
