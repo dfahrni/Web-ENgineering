@@ -35,16 +35,7 @@ docker run --name webengineering --detach --publish 80:80 webengineering
 3. Stoppe den Container mit `docker stop webengineering` und lösche ihn mit `docker rm webengineering`
 4. Erstelle ein docker-compose file (`docker-compose.yml`):
 
-```yaml
-version: "1"
-services:
-  web:
-    build: .
-    container_name: webengineering
-    restart: always
-    ports:
-      - "80:80"
-```
+[Docker-Compose.yml](docker-compose.yml)
 
 5. Nun kannst du den container mit `docker-compose up` starten. Nutze `docker-compose up --build` um das Image vor dem
    Starten neu zu builden.
