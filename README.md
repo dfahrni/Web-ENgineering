@@ -53,3 +53,14 @@ services:
 
 5. Nun kannst du den container mit `docker-compose up` starten. Nutze `docker-compose up --build` um das Image vor dem
    Starten neu zu builden.
+
+
+## Deployment
+
+Installieren von Azure CLI unter Ubuntu <p>
+Option 1: Install with one command
+
+```
+curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+```
+
