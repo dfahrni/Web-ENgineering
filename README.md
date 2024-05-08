@@ -21,7 +21,7 @@ Packe die Website in einen Docker Container
 
 1. Erstelle ein Dockerfile im Wurzelverzeichnis:
 
-[DockerFile](/Dockerfile)
+[DockerFile](Dockerfile)
 
 
 2. Erstelle und starte anschliessend das container image. Du solltest nun die Webseite auf `localhost` im Browser
