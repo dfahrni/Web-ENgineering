@@ -51,8 +51,12 @@ curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
 ```
 
 ## Script
-```
+```bash
 #!/bin/bash
+
+SERVICE_NAME=webengineering
+ACR_NAME=$SERVICE_NAME
+SERVICE_PRINCIPAL_NAME=$SERVICE_NAME
 
 # Docker image bauen und laufen lassen
 docker build . --tag webengineering
@@ -66,22 +70,34 @@ docker-compose up
 
 # Azure Resource Management
 az group create --name TEKO --location eastus
-az acr create --resource-group TEKO --name webengineering --sku Basic
-az acr login --name webengineering
+az acr create --resource-group TEKO --name $ACR_NAME --sku Basic
+az acr login --name $ACR_NAME
+ACR_LOGIN_SERVER=$(az acr show --name $CONTAINER_REGISTRY_NAME --query loginServer --output tsv)
 
 # Docker Images auf Azure Registry pushen
 docker tag webengineering webengineering.azurecr.io/webengineering:v1
 docker push webengineering.azurecr.io/webengineering:v1
 
-# Azure Container Registry (ACR) Befehle
-az acr repository list --name webengineering --output table
-az acr repository show-tags --name webengineering --repository webengineering --output table
+# Azure Container Registry Credentials
+ACR_REGISTRY_ID=$(az acr show --name $ACR_NAME --query "id" --output tsv)
+PASSWORD=$(az ad sp create-for-rbac --name $SERVICE_PRINCIPAL_NAME --scopes $ACR_REGISTRY_ID --role acrpull --query "password" --output tsv)
+USER_NAME=$(az ad sp list --display-name $SERVICE_PRINCIPAL_NAME --query "[].appId" --output tsv)
 
 # Azure Container Instance (ACI) erstellen
-az container create --resource-group TEKO --name webengineering --image webengineering.azurecr.io/webengineering:v1 --cpu 1 --memory 1 --registry-login-server webengineering.azurecr.io --registry-username <service-principal-ID> --registry-password <service-principal-password> --ip-address Public --dns-name-label <aciDnsLabel> --ports 80
+az container create \
+--resource-group TEKO \
+--name webengineering \
+--image webengineering.azurecr.io/webengineering:v1 \
+--cpu 1 \
+--memory 1 \
+--registry-login-server webengineering.azurecr.io \
+--registry-username $USER_NAME \
+--registry-password $PASSWORD \
+--ip-address Public \
+--dns-name-label $SERVICE_NAME \
+--ports 80
 
 # Informationen anzeigen
 az acr show --name webengineering --query loginServer
 az acr show --name webengineering --query loginServer --output table
 ```
-
