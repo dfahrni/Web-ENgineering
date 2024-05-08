@@ -13,6 +13,7 @@ mkdir Web-Engineering
 ```
 mkdir Uebung1
 ```
+4. Sämtlicher Inhalt aus der Uebung1 in dieses Unterverzeichnis Kopieren und mit ```cd /home/web-server01/Web-Engineering/Uebung1 ``` hinnavigieren
 
 ## Docker Container
 
