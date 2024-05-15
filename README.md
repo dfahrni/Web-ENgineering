@@ -69,7 +69,7 @@ docker-compose up --build
 docker-compose up
 
 # Azure Resource Management
-az group create --name TEKO --location switzerlandnorth
+az group create --name TEKO --location eastus
 az acr create --resource-group TEKO --name $ACR_NAME --sku Basic
 az acr login --name $ACR_NAME
 ACR_LOGIN_SERVER=$(az acr show --name $CONTAINER_REGISTRY_NAME --query loginServer --output tsv)

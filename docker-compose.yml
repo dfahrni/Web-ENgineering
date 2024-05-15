@@ -1,7 +1,7 @@
 version: "1"
 services:
   web:
-    build: ../01_HTML_CSS
+    build: .
     container_name: webengineering
     restart: always
     ports:
