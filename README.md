@@ -60,13 +60,13 @@ SERVICE_PRINCIPAL_NAME=$SERVICE_NAME
 
 # Docker image bauen und laufen lassen
 docker build . --tag webengineering
-docker run --name webengineering --detach --publish 80:80 webengineering
-docker stop webengineering
-docker rm webengineering
+#docker run --name webengineering --detach --publish 80:80 webengineering
+#docker stop webengineering
+#docker rm webengineering
 
 # Docker Compose Befehle
-docker-compose up --build
-docker-compose up
+#docker-compose up --build
+#docker-compose up
 
 # Azure Resource Management
 az group create --name TEKO --location eastus
